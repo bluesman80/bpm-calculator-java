@@ -33,9 +33,6 @@ jobs:
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
           EXCLUDE: "/bpm-calculator-0.0.1-SNAPSHOT/, /classes/, /generated-sources/, /generated-test-sources/, /maven-archiver/, /maven-status/, /surefire-reports/, /test-classes/"
-          SCRIPT_BEFORE: |
-            cd ${{ secrets.REMOTE_TEMP_DIR }} && rm -rf *
-          SCRIPT_BEFORE_REQUIRED: true
           SCRIPT_AFTER: |
-            cp ${{ secrets.REMOTE_TEMP_DIR }}/bpm.war ${{ secrets.REMOTE_TARGET }}
+            cp ${{ secrets.REMOTE_TARGET }}/bpm.war ${{ secrets.REMOTE_FINAL_TARGET }}
           SCRIPT_AFTER_REQUIRED: true
