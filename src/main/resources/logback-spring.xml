@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Include default Spring Boot logging configuration -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- Console Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Production Rolling File Appender -->
+    <appender name="ROLLING_FILE_PROD" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/application.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>300MB</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFileNamingAndTriggeringPolicy">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Development Rolling File Appender (Rollover on Startup) -->
+    <appender name="ROLLING_FILE_DEV" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/dev.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>logs/dev.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="nl.jimkaplan.bpmcalculator.config.logging.OnStartupTriggeringPolicy"/>
+    </appender>
+
+    <!-- Root Logger Configuration -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+
+        <!-- Production Profile Configuration -->
+        <springProfile name="prod">
+            <appender-ref ref="ROLLING_FILE_PROD"/>
+        </springProfile>
+
+        <!-- Development Profile Configuration -->
+        <springProfile name="dev">
+            <appender-ref ref="ROLLING_FILE_DEV"/>
+        </springProfile>
+    </root>
+
+    <!-- Additional Logger Configurations -->
+    <logger name="nl.jimkaplan" level="DEBUG"/>
+
+    <springProfile name="dev">
+        <logger name="org.springframework.web" level="DEBUG"/>
+    </springProfile>
+</configuration>
