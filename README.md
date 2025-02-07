@@ -88,5 +88,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 ## Acknowledgements
 
 - [Spring Boot](https://spring.io/projects/spring-boot)
-- [Bootstrap](https://getbootstrap.com/)
 - [Thymeleaf](https://www.thymeleaf.org/)
