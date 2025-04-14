@@ -1,7 +1,6 @@
 services:
   bpm-calculator:
     image: bluesman80/bpm-calculator:latest
-    platform: linux/amd64
     container_name: bpmcalculator
     ports:
       - "8080:8080"
