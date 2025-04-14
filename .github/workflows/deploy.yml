@@ -54,5 +54,5 @@ jobs:
             export LOGS_PATH=${{ secrets.REMOTE_LOGS_PATH }}/bpm-calculator
 
             # Pull the latest image and restart the service
-            docker compose -f docker-compose-bpm.yml pull
-            docker compose -f docker-compose-bpm.yml up -d
+            docker compose -f ${{ secrets.REMOTE_FINAL_TARGET }}/docker-compose-bpm.yml pull
+            docker compose -f ${{ secrets.REMOTE_FINAL_TARGET }}/docker-compose-bpm.yml up -d
