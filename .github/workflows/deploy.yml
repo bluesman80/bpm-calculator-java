@@ -33,22 +33,22 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-          port: ${{ secrets.REMOTE_PORT }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "docker-compose.yml"
-          target: ${{ secrets.REMOTE_FINAL_TARGET }}/docker-compose-bpm.yml
+          target: "${{ secrets.REMOTE_FINAL_TARGET }}/docker-compose-bpm.yml"
 
       - name: Deploy to Remote Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-          port: ${{ secrets.REMOTE_PORT }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # Set environment variables
             export RDW_API_TOKEN=${{ secrets.RDW_API_TOKEN }}
-            export LOGS_PATH=${{ secrets.REMOTE_LOGS_PATH }}
+            export LOGS_PATH=${{ secrets.REMOTE_LOGS_PATH }}/bpm-calculator
 
             # Pull the latest image and restart the service
             docker compose -f docker-compose-bpm.yml pull
