@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push with Maven
-        run: mvn -B deploy -Ddocker.username=${{ secrets.DOCKERHUB_USERNAME }} -Ddocker.password=${{ secrets.DOCKERHUB_TOKEN }} --file pom.xml
+        run: mvn -B install -Ddocker.username=${{ secrets.DOCKERHUB_USERNAME }} -Ddocker.password=${{ secrets.DOCKERHUB_TOKEN }} --file pom.xml
 
       - name: Copy docker-compose.yml to Remote Server
         uses: appleboy/scp-action@master
