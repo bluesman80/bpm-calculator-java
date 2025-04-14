@@ -23,6 +23,8 @@ campers die zijn omgebouwd van bedrijfsvoertuigen.
 - Maven
 - JavaScript
 - Thymeleaf
+- Docker
+- Docker Compose
 
 ## Getting Started
 
@@ -31,7 +33,13 @@ campers die zijn omgebouwd van bedrijfsvoertuigen.
 - Java 21 or higher
 - Maven
 
+OR
+
+- Docker and Docker Compose
+
 ### Installation
+
+#### Option 1: Standard Installation
 
 1. Clone the repository:
     ```sh
@@ -55,6 +63,32 @@ campers die zijn omgebouwd van bedrijfsvoertuigen.
     ```
 
 5. Access the application at `http://localhost:8080/bpm`.
+
+#### Option 2: Docker Installation
+
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/bluesman80/bpm-calculator-java.git
+    cd bpm-calculator-java
+    ```
+
+2. Set up the environment variables:
+    ```sh
+    export RDW_API_TOKEN=your_rdw_api_token
+    ```
+
+3. Build the project (which also builds the Docker image) and then run with Docker Compose:
+    ```sh
+    mvn clean verify
+    docker-compose up -d
+    ```
+
+4. Access the application at `http://localhost:8080/bpm`.
+
+5. To stop the application:
+    ```sh
+    docker-compose down
+    ```
 
 ## Configuration
 
