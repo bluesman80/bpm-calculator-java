@@ -36,7 +36,7 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "docker-compose.yml"
-          target: ${{ secrets.REMOTE_FINAL_TARGET }}
+          target: ${{ secrets.REMOTE_FINAL_TARGET }}/docker-compose-bpm.yml
 
       - name: Deploy to Remote Server
         uses: appleboy/ssh-action@master
@@ -51,5 +51,5 @@ jobs:
             export LOGS_PATH=${{ secrets.REMOTE_LOGS_PATH }}
 
             # Pull the latest image and restart the service
-            docker compose pull
-            docker compose up -d
+            docker compose -f docker-compose-bpm.yml pull
+            docker compose -f docker-compose-bpm.yml up -d
