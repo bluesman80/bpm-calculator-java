@@ -30,14 +30,19 @@ jobs:
         run: mvn -B install -Ddocker.username=${{ secrets.DOCKERHUB_USERNAME }} -Ddocker.password=${{ secrets.DOCKERHUB_TOKEN }} --file pom.xml
 
       - name: Copy docker-compose.yml to Remote Server
-        uses: appleboy/scp-action@master
+        uses: easingthemes/ssh-deploy@main
         with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          port: ${{ secrets.REMOTE_SSH_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "docker-compose.yml"
-          target: "${{ secrets.REMOTE_FINAL_TARGET }}/docker-compose-bpm.yml"
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "target/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "/bpm-calculator-0.0.1-SNAPSHOT/, /classes/, /generated-sources/, /generated-test-sources/, /maven-archiver/, /maven-status/, /surefire-reports/, /test-classes/"
+          SCRIPT_AFTER: |
+            cp ${{ secrets.REMOTE_TARGET }}/docker-compose.yml ${{ secrets.REMOTE_FINAL_TARGET }}/docker-compose-bpm.yml
+          SCRIPT_AFTER_REQUIRED: true
 
       - name: Deploy to Remote Server
         uses: appleboy/ssh-action@master
