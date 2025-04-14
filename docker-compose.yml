@@ -1,14 +1,12 @@
-version: '3.8'
-
 services:
   bpm-calculator:
-    build: .
-    container_name: bpm-calculator
+    image: bluesman80/bpm-calculator:latest
+    container_name: bpmcalculator
     ports:
       - "8080:8080"
     environment:
       - RDW_API_TOKEN=${RDW_API_TOKEN}
       - SPRING_PROFILES_ACTIVE=prod
     volumes:
-      - ./logs:/app/logs
+      - /logs/bpm-calculator:/app/logs
     restart: unless-stopped
