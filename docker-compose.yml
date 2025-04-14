@@ -8,5 +8,5 @@ services:
       - RDW_API_TOKEN=${RDW_API_TOKEN}
       - SPRING_PROFILES_ACTIVE=prod
     volumes:
-      - /logs/bpm-calculator:/app/logs
+      - ./logs/bpm-calculator:/app/logs
     restart: unless-stopped
